@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class teamMaker {
 
-    private int totalNumPerson = 1;
+    private int totalNumPerson = 0;
 
     public boolean readFile() {
 
@@ -51,7 +51,7 @@ public class teamMaker {
     }
 
     public void clearTotalNumPerson() {
-        totalNumPerson = 1;
+        totalNumPerson = 0;
     }
 
 }

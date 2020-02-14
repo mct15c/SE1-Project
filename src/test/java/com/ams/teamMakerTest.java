@@ -59,7 +59,7 @@ public class teamMakerTest
         teams.clearTotalNumPerson();
         numPerson = teams.getTotalNumPerson();
         System.out.println("Total Number of People: "+numPerson);
-        assertEquals(1,numPerson);
+        assertEquals(0,numPerson);
     }
 
 }
