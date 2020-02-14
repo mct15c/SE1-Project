@@ -30,20 +30,36 @@ public class teamMakerTest
     }
 
     @Test
-    public void testReadFile() 
+    public void test1ReadFile() 
     {
     	boolean worked = teams.readFile();
        	assertEquals(true,worked);
     }
 
     @Test
-    public void testTotalNumPerson(){
+    public void test2TotalNumPerson(){
     	// have to read the file again because it goes out of scope 
     	// or something in the previous test for total number of people
     	boolean worked = teams.readFile();
     	int numPerson = teams.getTotalNumPerson();
+        System.out.println("Total Number of People: "+numPerson);
     	assertEquals(true, worked);
     	assertEquals(7,numPerson);
+    }
+
+    @Test
+    public void test3ClearTotalNumPerson(){
+        // have to read the file again because it goes out of scope 
+        // or something in the previous test for total number of people
+        boolean worked = teams.readFile();
+        int numPerson = teams.getTotalNumPerson();
+        assertEquals(true, worked);
+        assertEquals(7,numPerson);
+        System.out.println("Total Number of People: "+numPerson);
+        teams.clearTotalNumPerson();
+        numPerson = teams.getTotalNumPerson();
+        System.out.println("Total Number of People: "+numPerson);
+        assertEquals(1,numPerson);
     }
 
 }
