@@ -3,6 +3,9 @@ package com.ams;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class teamMaker {
 
@@ -36,7 +39,20 @@ public class teamMaker {
                 System.out.println("]");
                 numPerson++;
             }
-            totalNumPerson = numPerson-1;
+            
+			totalNumPerson = numPerson-1;
+			
+			List<Integer> bucket_list = new ArrayList<Integer>();
+			
+			for (int i = 1; i < totalNumPerson + 1; i++) {
+				bucket_list.add(i);
+			
+			}
+			
+			Collections.shuffle(bucket_list);
+			
+			
+			
             return true;
 
         } catch (IOException e) {
