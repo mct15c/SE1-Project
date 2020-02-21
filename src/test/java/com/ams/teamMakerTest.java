@@ -62,6 +62,21 @@ public class teamMakerTest
         assertEquals(0,numPerson);
     }
 
+    @Test
+    public void test4BeforeRandomizer(){
+        boolean worked = teams.readFile();
+        System.out.println("Bucket List "+teams.getList());
+        assertEquals(true,worked);
+    }
+
+    @Test
+    public void test5Randomizer(){
+        boolean worked = teams.readFile();
+        assertEquals(true,worked);
+        worked = teams.randomizer(teams.getList());
+        assertEquals(true,worked);
+    }
+
 }
 
 

@@ -4,18 +4,23 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class teamMaker {
 
     private int totalNumPerson = 0;
+    private List<Integer> bucket_list = null;
+    //private static String[][] personChoice;
 
     public boolean readFile() {
 
-        String csvFile = "src/main/java/com/ams/Test.csv";
+        String csvFile = "Test.csv";
         String line = "";
         String cvsSplitBy = ",";
+        bucket_list = new ArrayList<Integer>();
+        //personChoice = new String[1][];
 
         int numPerson = 1;
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
@@ -29,10 +34,12 @@ public class teamMaker {
                 String[] member = line.split(cvsSplitBy);
 
                 
+
                 System.out.print("Member "+numPerson+": "+member[0]+" [");
                 if (member.length > 1){
                     System.out.print(member[1]);
                     for (int i = 2; i < member.length; i++) {
+                        //personChoice.add(member[i]);
                         System.out.print(","+member[i]);
                     }
                 }
@@ -42,16 +49,11 @@ public class teamMaker {
             
 			totalNumPerson = numPerson-1;
 			
-			List<Integer> bucket_list = new ArrayList<Integer>();
+			
 			
 			for (int i = 1; i < totalNumPerson + 1; i++) {
 				bucket_list.add(i);
-			
 			}
-			
-			Collections.shuffle(bucket_list);
-			
-			
 			
             return true;
 
@@ -60,6 +62,19 @@ public class teamMaker {
             return false;
         }
 
+    }
+
+    public List getList() {
+        return bucket_list;
+    }
+
+    public boolean randomizer(List<Integer> bucket_list) {
+        if (bucket_list == null) {
+            return false;
+        }
+        Collections.shuffle(bucket_list);
+        System.out.println("Bucket List "+bucket_list);
+        return true;
     }
 
     public int getTotalNumPerson() {
