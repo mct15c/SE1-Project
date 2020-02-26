@@ -12,7 +12,7 @@ public class teamMaker {
 
     private int totalNumPerson = 0;
     private List<Integer> bucket_list = null;
-    //private static String[][] personChoice;
+    private ArrayList<String[]> preferences = null;
 
     public boolean readFile() {
 
@@ -20,7 +20,7 @@ public class teamMaker {
         String line = "";
         String cvsSplitBy = ",";
         bucket_list = new ArrayList<Integer>();
-        //personChoice = new String[1][];
+        preferences = new ArrayList<String[]>();
 
         int numPerson = 1;
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
@@ -33,13 +33,12 @@ public class teamMaker {
                 // may cause type errors in the future
                 String[] member = line.split(cvsSplitBy);
 
-                
+                preferences.add(member);
 
                 System.out.print("Member "+numPerson+": "+member[0]+" [");
                 if (member.length > 1){
                     System.out.print(member[1]);
                     for (int i = 2; i < member.length; i++) {
-                        //personChoice.add(member[i]);
                         System.out.print(","+member[i]);
                     }
                 }
@@ -48,13 +47,12 @@ public class teamMaker {
             }
             
 			totalNumPerson = numPerson-1;
-			
-			
+
 			
 			for (int i = 1; i < totalNumPerson + 1; i++) {
 				bucket_list.add(i);
 			}
-			
+
             return true;
 
         } catch (IOException e) {
