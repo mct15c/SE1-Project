@@ -50,7 +50,7 @@ public class teamMaker {
 			totalNumPerson = numPerson-1;
 			
 			
-			
+			//creates bucket list//
 			for (int i = 1; i < totalNumPerson + 1; i++) {
 				bucket_list.add(i);
 			}
