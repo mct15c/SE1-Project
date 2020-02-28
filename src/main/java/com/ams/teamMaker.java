@@ -64,9 +64,15 @@ public class teamMaker {
 
     public void happy_Checker() {
         ArrayList<String> group = new ArrayList<String>();
-        ArrayList<String> test = [] //test contains the names and numbers of the csv
+        ArrayList<String[]> test = new ArrayList<String[]>(); //test contains the names and numbers of the csv
         int groupsize = 4;
-        
+
+        String individual_list[] = new String[7];
+        String swapholder = "";
+        ArrayList<String[]> csv_number_list = new ArrayList<String[]>();
+        int happiness = 0;
+        int zero_count = 0;
+
         //place the below variables in another loop, final product will be in a nested
         //for loop, outer compares one bucket list to another, inner counts happiness and
         //unhappiness. 
@@ -80,7 +86,7 @@ public class teamMaker {
         //Outer for loop will iterate over each bucket if possible and is set up to do so, if not possible individual values
         for (int c = 0; c < bucket_list.size(); c++) { //We must account for uneven teams (2 teams of 3 with 1 team of 2)
         
-            for (int d = 0; d < individual_list.size(); d++){
+            for (int d = 0; d < individual_list.length; d++){
                 //current d value will be swapped to the beginning, beginning value swapped to where
                 //d was, and all values are checked with no skipping
                 individual_list[d] = swapholder;
@@ -88,7 +94,7 @@ public class teamMaker {
                 individual_list[0] = swapholder;
                 
                 for(int e = 0; e < csv_number_list.size(); e++){
-                    if(test[c][e] == individual_list[d]){
+                    if(test.get(c)[e] == individual_list[d]){
                         happiness += groupsize - d;
                     }
                     
