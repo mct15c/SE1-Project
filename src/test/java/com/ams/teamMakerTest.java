@@ -75,6 +75,19 @@ public class teamMakerTest
         assertEquals(true,worked);
         worked = teams.randomizer(teams.getList());
         assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void testHappiness(){
+        boolean worked = teams.readFile();
+        assertEquals(true,worked);
+        worked = teams.randomizer(teams.getList());
+        assertEquals(true,worked);
+        teams.happy_Checker();
+        worked = teams.randomizer(teams.getList());
+        assertEquals(true,worked);
+        teams.happy_Checker();
     }
 
 }
