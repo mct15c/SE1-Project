@@ -1,5 +1,3 @@
-package com.ams;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -12,9 +10,9 @@ import org.junit.runners.MethodSorters;
 import org.junit.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class teamMakerTest
+public class HappyTeamsTest
 {
-    teamMaker teams;
+    HappyTeams teams;
 
     @Rule
     public TestRule watcher =
@@ -26,7 +24,7 @@ public class teamMakerTest
     
     @Before
     public void initialize() {
-		teams = new teamMaker();
+		teams = new HappyTeams();
     }
 
     @Test
@@ -44,7 +42,7 @@ public class teamMakerTest
     	int numPerson = teams.getTotalNumPerson();
         System.out.println("Total Number of People: "+numPerson);
     	assertEquals(true, worked);
-    	assertEquals(7,numPerson);
+    	assertEquals(11,numPerson);
     }
 
     @Test
@@ -54,7 +52,7 @@ public class teamMakerTest
         boolean worked = teams.readFile();
         int numPerson = teams.getTotalNumPerson();
         assertEquals(true, worked);
-        assertEquals(7,numPerson);
+        assertEquals(11,numPerson);
         System.out.println("Total Number of People: "+numPerson);
         teams.clearTotalNumPerson();
         numPerson = teams.getTotalNumPerson();
