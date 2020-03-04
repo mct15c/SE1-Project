@@ -167,7 +167,7 @@ public class HappyTeams {
             }
             System.out.println("END OF ITERATION");
 
-            for(int d = 0; d < current_team.size(); d++){
+            for(int d = 0; d < groupsize; d++){
 				System.out.println("It worked");
                 String swapholder = "";
 
