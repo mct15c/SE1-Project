@@ -109,8 +109,9 @@ public class HappyTeams {
                     }
                 }
                 System.out.println("]");
-                bucket_list.add(String.valueOf(numPerson-1));
-                numPerson++;
+                bucket_list.add(String.valueOf(numPerson));
+                				
+				numPerson++;
             }
 
             teams = bucket_list;
@@ -132,8 +133,8 @@ public class HappyTeams {
         //String individual_list[] = new String[11];
         // String swapholder = "";
         ArrayList<String[]> csv_number_list = new ArrayList<String[]>();
-        int happiness = 0;
-        int zero_count = 0;
+        //int happiness = 0;
+        //int zero_count = 0;
 
         //place the below variables in another loop, final product will be in a nested
         //for loop, outer compares one bucket list to another, inner counts happiness and
@@ -146,7 +147,7 @@ public class HappyTeams {
         int zero_count_team = 0;
         int zero_count_other = 0;
         int happiness_other = 0;
-
+		int counter = 0;
         int a = 0;
 
         ArrayList<String> current_team = new ArrayList<String>();
@@ -156,9 +157,14 @@ public class HappyTeams {
 
         for(int outer = 0; outer < runtime; outer++){
             //GRAB TEAM WE WANT TO CHECK NEXT
+			
+			//Checks how long current_team is
+			counter = 0;
+			
             for(int b = 0; b < groupsize && a < teams.size(); b++){
                 current_team.add(teams.get(a).toString());
                 a++;
+				counter++;
             }
 
             //TO PRINT OUT current team
@@ -167,8 +173,8 @@ public class HappyTeams {
             }
             System.out.println("END OF ITERATION");
 
-            for(int d = 0; d < groupsize; d++){
-				System.out.println("It worked");
+            for(int d = 0; d < counter; d++){
+				//System.out.println("It worked");
                 String swapholder = "";
 
                 //To keep track in my head on what's what
@@ -195,25 +201,25 @@ public class HappyTeams {
                 }
                 System.out.println("END OF ITERATION");
 				
-				// e and f's orders need to be switched, first start with current_team's values, then the inner loop cycles through preferences.
-
-                for (int e = 1; e < preferences.get(d).length; e++){
-                    for(int f = 1; f < current_team.size(); f++){
-
-                        //System.out.println("d: "+d+" e: "+e+" f: "+f);
-                        System.out.println("Person Checking: "+preferences.get(Integer.valueOf(current_team.get(d)))[e]);
-                        System.out.println("Teammates: "+current_team.get(f));
-						System.out.println("d: "+d);
-						System.out.println("e: "+e);
-						System.out.println("f: "+f);
+				System.out.println("current_team(d): "+current_team.get(d));
+				
+				for(int e = 1; e < counter; e++){
+					
+					int num = preferences.get(Integer.valueOf(current_team.get(0))-1).length; // ))-1
+					System.out.println("Length" +num);
+					
+					System.out.println("current_team e:" +current_team.get(e));
+					
+					for(int f = 1; f < num; f++){
+						System.out.println("pref: "+preferences.get(Integer.valueOf(current_team.get(0))-1)[f]);
 						
-                        if(preferences.get(Integer.valueOf(current_team.get(d))).length > 1 && preferences.get(Integer.valueOf(current_team.get(d)))[e] == current_team.get(f)){
-                            //happiness_team += ((preferences.get(d).length-1) - (e-1));
-                            happiness_team += 1;
-                        }
-                    }
+						if(current_team.get(Integer.valueOf(e)).equals(preferences.get(Integer.valueOf(current_team.get(0))-1)[f])){
+							happiness_team+= (groupsize - e); //d or e?
+						}
+						
+					}
+				}
 
-                }
                 happiness_main += happiness_team;
 
                 if(happiness_team == 0){
@@ -238,7 +244,8 @@ public class HappyTeams {
 			//TO RESET current_team so you can grab next team
             current_team.clear();
         }
-		
+		System.out.println("Main happiness: "+happiness_main);
+		System.out.println("Main zeroes: "+zero_count_main);
     }
 
     public List getList() {
