@@ -32,6 +32,7 @@ public class HappyTeamsTest
     {
     	boolean worked = teams.readFile("Test.csv");
        	assertEquals(true,worked);
+        System.out.println("\n");
     }
 
     @Test
@@ -43,6 +44,7 @@ public class HappyTeamsTest
         System.out.println("Total Number of People: "+numPerson);
     	assertEquals(true, worked);
     	assertEquals(11,numPerson);
+        System.out.println("\n");
     }
 
     @Test
@@ -58,6 +60,7 @@ public class HappyTeamsTest
         numPerson = teams.getTotalNumPerson();
         System.out.println("Total Number of People: "+numPerson);
         assertEquals(0,numPerson);
+        System.out.println("\n");
     }
 
     @Test
@@ -65,6 +68,7 @@ public class HappyTeamsTest
         boolean worked = teams.readFile("Test.csv");
         System.out.println("Bucket List "+teams.getList());
         assertEquals(true,worked);
+        System.out.println("\n");
     }
 
     @Test
@@ -86,6 +90,7 @@ public class HappyTeamsTest
         worked = teams.randomizer(teams.getList());
         assertEquals(true,worked);
         teams.happy_Checker();
+        System.out.println("\n");
     }
 
     @Test
@@ -93,11 +98,24 @@ public class HappyTeamsTest
         boolean worked = teams.readFile("Test.csv");
         assertEquals(true,worked);
         int l = teams.getL();
+        teams.happy_Checker();
+        int happy = teams.getHappinessMain();
+        int unHappy = teams.getZeroCountMain();
+        int happyAfter = 0;
+        int unHappyAfter = 0;
         for (int i = 0; i < l; i++) {
             worked = teams.randomizer(teams.getList());
             assertEquals(true,worked);
             teams.happy_Checker();
+            happyAfter = teams.getHappinessMain();
+            unHappyAfter = teams.getZeroCountMain();
+            assert(happy <= happyAfter && unHappy >= unHappyAfter);
+            if (happy <= happyAfter && unHappy >= unHappyAfter) {
+                happy = happyAfter;
+                unHappy = unHappyAfter;
+            }
         }
+        System.out.println("\n");
     }
 
 }

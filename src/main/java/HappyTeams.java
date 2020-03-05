@@ -16,20 +16,21 @@ public class HappyTeams {
     private ArrayList<String[]> preferences = null;
     private ArrayList<String> teams_main = null;
     private ArrayList<String> teams_other = null;
-    private int groupsize = 4;
 
     private int happiness_main = 0;
     private int zero_count_main = 0;
     private int happiness_other = 0;
     private int zero_count_other = 0;
 
-    private int n = 1000;
-    private int l = 5;
-    private int r = 2;
-    private boolean v_one = false;
-    private boolean v_two = false;
-    private boolean v_three = false;
-    private boolean v_four = false;
+    //Variables that will get the values from the command line args
+    private static int groupsize = 4;
+    private static int n = 1000;
+    private static int l = 5;
+    private static int r = 2;
+    private static boolean v_one = false;
+    private static boolean v_two = false;
+    private static boolean v_three = false;
+    private static boolean v_four = false;
 
     public static void main(String[] args) { 
         // check if length of args array is 
@@ -44,8 +45,8 @@ public class HappyTeams {
             // the command line arguments 
             for (int val = 0; val < args.length; val+=2) {
 
-                if(args[val] == "-v"){
-                    if(Integer.valueOf(args[val + 1])> 0){
+                if(args[val].equals("-v")){
+                    if(Integer.valueOf(args[val + 1]) > 0){
                         v_one = true;
                     }
 
@@ -68,26 +69,35 @@ public class HappyTeams {
                     }
                 }
 
-                if(args[val] == "-t"){
+                if(args[val].equals("-t")){
                     groupsize = Integer.valueOf(args[val+1]);
                 }
 
-                if(args[val] == "-n"){
+                if(args[val].equals("-n")){
                     n = Integer.valueOf(args[val+1]);
                 }
 
-                if(args[val] == "-l"){
+                if(args[val].equals("-l")){
                     l = Integer.valueOf(args[val+1]);
                 }
 
-                if(args[val] == "-r"){
+                if(args[val].equals("-r")){
                     r = Integer.valueOf(args[val+1]);
-                }
-                System.out.println(val); 
+                } 
             }
         } else {
             System.out.println("No command line "+ 
                                "arguments found."); 
+        }
+        if(v_two){
+            System.out.println(v_one);
+            System.out.println(v_two);
+            System.out.println(v_three);
+            System.out.println(v_four);
+            System.out.println(groupsize);
+            System.out.println(n);
+            System.out.println(l);
+            System.out.println(r);
         }
     }
 
@@ -145,146 +155,6 @@ public class HappyTeams {
         }
 
     }
-
-  //   public void swap() {
-  //       ArrayList<String> group = new ArrayList<String>();
-  //       ArrayList<String[]> test = new ArrayList<String[]>(); //test contains the names and numbers of the csv
-  //       ArrayList<String[]> csv_number_list = new ArrayList<String[]>();
-
-  //       int happiness_team = 0;
-  //       int zero_count_team = 0;
-		// int counter = 0;
-  //       int a = 0;
-
-  //       ArrayList<String> current_team = new ArrayList<String>();
-
-  //       int runtime = (int) Math.ceil((double) teams_other.size() / groupsize);
-		
-		// if(v_one){
-		// 		System.out.println("runtime="+runtime);
-		// 	}
-
-  //       for(int outer = 0; outer < runtime; outer++){
-  //           //GRAB TEAM WE WANT TO CHECK NEXT
-			
-		// 	//Checks how long current_team is
-		// 	counter = 0;
-			
-  //           for(int b = 0; b < groupsize && a < teams_other.size(); b++){
-  //               current_team.add(teams_other.get(a).toString());
-  //               a++;
-		// 		counter++;
-  //           }
-			
-		// 	if(v_one){
-		// 		System.out.println("outer="+outer);
-		// 	}
-
-  //           //TO PRINT OUT current team
-		// 	if(v_two){
-		// 		for(int x = 0; x < current_team.size(); x++){
-		// 			System.out.println("current_team: "+current_team.get(x));
-		// 		}
-		// 		System.out.println("END OF ITERATION");
-		// 	}
-
-  //           for(int d = 0; d < counter; d++){
-  //               String swapholder = "";
-				
-		// 		if(v_one){
-		// 			System.out.println("d="+d);
-		// 		}
-				
-		// 		if(v_two){
-		// 			System.out.println("outer="+outer);
-		// 			System.out.println("Current_List normal: " + current_team);
-		// 		}
-				
-				
-
-  //               swapholder = current_team.get(d);
-  //               current_team.set(d,current_team.get(0));
-  //               current_team.set(0,swapholder);
-					
-		// 		if(v_two){
-		// 			System.out.println("Swapholder works");
-		// 			System.out.println("d works");
-		// 			System.out.println("0 works");
-		// 		}
-				
-		// 		if(v_three){
-		// 			System.out.println("swapholder="+swapholder);
-		// 			System.out.println("Current_List swapped:" + current_team);
-		// 		}
-				
-				
-
-  //               //TO PRINT OUT current team
-		// 		if(v_two){
-		// 			for(int x = 0; x < current_team.size(); x++){
-		// 				System.out.println("current_team: "+current_team.get(x));
-		// 			}
-		// 			System.out.println("END OF ITERATION");
-				
-		// 			System.out.println("current_team(d): "+current_team.get(d));
-		// 		}
-				
-		// 		for(int e = 1; e < counter; e++){
-					
-		// 			int num = preferences.get(Integer.valueOf(current_team.get(0))-1).length; // ))-1
-					
-		// 			if(v_three){
-		// 				System.out.println("Length" +num);
-						
-		// 				System.out.println("current_team e:" +current_team.get(e));
-		// 			}
-					
-		// 			for(int f = 1; f < num; f++){
-						
-		// 				if(v_four){
-		// 					System.out.println("Members: "+preferences.get(Integer.valueOf(current_team.get(0))-1)[f]);
-		// 				}
-		// 				if(current_team.get(Integer.valueOf(e)).equals(preferences.get(Integer.valueOf(current_team.get(0))-1)[f])){
-		// 					happiness_team+= (groupsize - e); //d or e?
-		// 				}
-						
-		// 			}
-		// 		}
-
-  //               happiness_other += happiness_team;
-
-  //               if(happiness_team == 0){
-  //                   zero_count_team += 1;
-  //               }
-
-  //               swapholder = current_team.get(0);
-  //               current_team.set(0,current_team.get(d));
-  //               current_team.set(d,swapholder);
-				
-		// 		if(v_two){
-		// 			System.out.println("Current_List reverted: " + current_team);
-		// 		}
-  //           }
-
-  //           zero_count_other += zero_count_team;
-
-		// 	if(v_two){
-		// 		System.out.println("happiness_team: "+happiness_team);
-		// 		System.out.println("unhappiness_team: "+zero_count_team);
-		// 	}
-  //           happiness_team = 0;
-  //           zero_count_team = 0;
-			
-		// 	//TO RESET current_team so you can grab next team
-  //           current_team.clear();
-  //       }
-  //       if (v_two) {
-  //   		System.out.println("Main happiness: "+happiness_main);
-  //   		System.out.println("Main zeroes: "+zero_count_main);
-  //           System.out.println("Other happiness: "+happiness_other);
-  //           System.out.println("Other zeroes: "+zero_count_other);
-  //       }
-  //   }
 
     public void swap() {
         ArrayList<String> group = new ArrayList<String>();
@@ -450,7 +320,15 @@ public class HappyTeams {
     }
 	
     public List getList() {
-        return bucket_list;
+        return teams_main;
+    }
+
+    public int getHappinessMain() {
+        return happiness_main;
+    }
+
+    public int getZeroCountMain() {
+        return zero_count_main;
     }
 
     public boolean randomizer(List<Integer> bucket_list) {
