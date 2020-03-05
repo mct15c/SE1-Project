@@ -30,7 +30,7 @@ public class HappyTeamsTest
     @Test
     public void test1ReadFile() 
     {
-    	boolean worked = teams.readFile();
+    	boolean worked = teams.readFile("Test.csv");
        	assertEquals(true,worked);
     }
 
@@ -38,7 +38,7 @@ public class HappyTeamsTest
     public void test2TotalNumPerson(){
     	// have to read the file again because it goes out of scope 
     	// or something in the previous test for total number of people
-    	boolean worked = teams.readFile();
+    	boolean worked = teams.readFile("Test.csv");
     	int numPerson = teams.getTotalNumPerson();
         System.out.println("Total Number of People: "+numPerson);
     	assertEquals(true, worked);
@@ -49,7 +49,7 @@ public class HappyTeamsTest
     public void test3ClearTotalNumPerson(){
         // have to read the file again because it goes out of scope 
         // or something in the previous test for total number of people
-        boolean worked = teams.readFile();
+        boolean worked = teams.readFile("Test.csv");
         int numPerson = teams.getTotalNumPerson();
         assertEquals(true, worked);
         assertEquals(11,numPerson);
@@ -62,14 +62,14 @@ public class HappyTeamsTest
 
     @Test
     public void test4BeforeRandomizer(){
-        boolean worked = teams.readFile();
+        boolean worked = teams.readFile("Test.csv");
         System.out.println("Bucket List "+teams.getList());
         assertEquals(true,worked);
     }
 
     @Test
     public void test5Randomizer(){
-        boolean worked = teams.readFile();
+        boolean worked = teams.readFile("Test.csv");
         assertEquals(true,worked);
         worked = teams.randomizer(teams.getList());
         assertEquals(true,worked);
@@ -78,7 +78,7 @@ public class HappyTeamsTest
 
     @Test
     public void testHappiness(){
-        boolean worked = teams.readFile();
+        boolean worked = teams.readFile("Test.csv");
         assertEquals(true,worked);
         worked = teams.randomizer(teams.getList());
         assertEquals(true,worked);
@@ -86,6 +86,18 @@ public class HappyTeamsTest
         worked = teams.randomizer(teams.getList());
         assertEquals(true,worked);
         teams.happy_Checker();
+    }
+
+    @Test
+    public void testHappinessWithUsingL(){
+        boolean worked = teams.readFile("Test.csv");
+        assertEquals(true,worked);
+        int l = teams.getL();
+        for (int i = 0; i < l; i++) {
+            worked = teams.randomizer(teams.getList());
+            assertEquals(true,worked);
+            teams.happy_Checker();
+        }
     }
 
 }

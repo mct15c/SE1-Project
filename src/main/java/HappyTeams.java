@@ -6,69 +6,82 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.lang.Math;
+import java.util.Random;
+import java.util.*;
 
 public class HappyTeams {
 
     private int totalNumPerson = 0;
     private ArrayList<String> bucket_list = null;
     private ArrayList<String[]> preferences = null;
-    private ArrayList<String> teams = null;
+    private ArrayList<String> teams_main = null;
+    private ArrayList<String> teams_other = null;
     private int groupsize = 4;
-    private int zero_count_main = 0;
+
     private int happiness_main = 0;
-    private int number_of_swaps = 1000;
-    private int number_of_swap_times = 5;
-    private int sub_optimal = 2;
+    private int zero_count_main = 0;
+    private int happiness_other = 0;
+    private int zero_count_other = 0;
+
+    private int n = 1000;
+    private int l = 5;
+    private int r = 2;
     private boolean v_one = false;
     private boolean v_two = false;
     private boolean v_three = false;
     private boolean v_four = false;
 
-    public void main(String[] args) { 
+    public static void main(String[] args) { 
         // check if length of args array is 
         // greater than 0 
 
         if (args.length > 0) { 
-            
+
             System.out.println("The command line"+ 
                                " arguments are:"); 
-  
+
             // iterating the args array and printing 
             // the command line arguments 
             for (int val = 0; val < args.length; val+=2) {
-                
+
                 if(args[val] == "-v"){
-                    if(args[val + 1] == "1"){
+                    if(Integer.valueOf(args[val + 1])> 0){
                         v_one = true;
                     }
-                    
-                    if(args[val + 1] == "2"){
+
+                    if(Integer.valueOf(args[val + 1]) > 1){
+						v_one = true;
                         v_two = true;
                     }
-                    
-                    if(args[val + 1] == "3"){
+
+                    if(Integer.valueOf(args[val + 1]) > 2){
+						v_one = true;
+                        v_two = true;
                         v_three = true;
                     }
-                    
-                    if(args[val + 1] == "4"){
+
+                    if(Integer.valueOf(args[val + 1]) > 3){
+						v_one = true;
+                        v_two = true;
+                        v_three = true;
                         v_four = true;
                     }
                 }
-                
+
                 if(args[val] == "-t"){
                     groupsize = Integer.valueOf(args[val+1]);
                 }
-                
+
                 if(args[val] == "-n"){
-                    number_of_swaps = Integer.valueOf(args[val+1]);
+                    n = Integer.valueOf(args[val+1]);
                 }
-                
+
                 if(args[val] == "-l"){
-                    number_of_swap_times = Integer.valueOf(args[val+1]);
+                    l = Integer.valueOf(args[val+1]);
                 }
-                
+
                 if(args[val] == "-r"){
-                    sub_optimal = Integer.valueOf(args[val+1]);
+                    r = Integer.valueOf(args[val+1]);
                 }
                 System.out.println(val); 
             }
@@ -78,19 +91,25 @@ public class HappyTeams {
         }
     }
 
-    public boolean readFile() {
+    public boolean readFile(String file) {
 
-        String csvFile = "Test.csv";
+        String csvFile = file;
         String line = "";
         String cvsSplitBy = ",";
         bucket_list = new ArrayList<String>();
-        teams = new ArrayList<String>();
+        teams_main = new ArrayList<String>();
+        teams_other = new ArrayList<String>();
         preferences = new ArrayList<String[]>();
+		
+		// v_one = true;
+		// v_two = true;
+		// v_three = true;
+		// v_four = true;
 
         int numPerson = 1;
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
 
-            
+
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
@@ -100,19 +119,22 @@ public class HappyTeams {
 
                 preferences.add(member);
 
-                System.out.print("Member "+numPerson+": "+member[0]+" [");
-                if (member.length > 1){
-                    System.out.print(member[1]);
-                    for (int i = 2; i < member.length; i++) {
-                        System.out.print(","+member[i]);
+                if(v_one){
+                    System.out.print("Member "+numPerson+": "+member[0]+" [");
+                    if (member.length > 1){
+                        System.out.print(member[1]);
+                        for (int i = 2; i < member.length; i++) {
+                            System.out.print(","+member[i]);
+                        }
                     }
+                    System.out.println("]");
                 }
-                System.out.println("]");
-                bucket_list.add(String.valueOf(numPerson-1));
-                numPerson++;
+                bucket_list.add(String.valueOf(numPerson));
+                				
+				numPerson++;
             }
-            
-            teams = bucket_list;
+
+            teams_other = bucket_list;
 			totalNumPerson = numPerson-1;
 
             return true;
@@ -124,116 +146,319 @@ public class HappyTeams {
 
     }
 
-    public void happy_Checker() {
+  //   public void swap() {
+  //       ArrayList<String> group = new ArrayList<String>();
+  //       ArrayList<String[]> test = new ArrayList<String[]>(); //test contains the names and numbers of the csv
+  //       ArrayList<String[]> csv_number_list = new ArrayList<String[]>();
+
+  //       int happiness_team = 0;
+  //       int zero_count_team = 0;
+		// int counter = 0;
+  //       int a = 0;
+
+  //       ArrayList<String> current_team = new ArrayList<String>();
+
+  //       int runtime = (int) Math.ceil((double) teams_other.size() / groupsize);
+		
+		// if(v_one){
+		// 		System.out.println("runtime="+runtime);
+		// 	}
+
+  //       for(int outer = 0; outer < runtime; outer++){
+  //           //GRAB TEAM WE WANT TO CHECK NEXT
+			
+		// 	//Checks how long current_team is
+		// 	counter = 0;
+			
+  //           for(int b = 0; b < groupsize && a < teams_other.size(); b++){
+  //               current_team.add(teams_other.get(a).toString());
+  //               a++;
+		// 		counter++;
+  //           }
+			
+		// 	if(v_one){
+		// 		System.out.println("outer="+outer);
+		// 	}
+
+  //           //TO PRINT OUT current team
+		// 	if(v_two){
+		// 		for(int x = 0; x < current_team.size(); x++){
+		// 			System.out.println("current_team: "+current_team.get(x));
+		// 		}
+		// 		System.out.println("END OF ITERATION");
+		// 	}
+
+  //           for(int d = 0; d < counter; d++){
+  //               String swapholder = "";
+				
+		// 		if(v_one){
+		// 			System.out.println("d="+d);
+		// 		}
+				
+		// 		if(v_two){
+		// 			System.out.println("outer="+outer);
+		// 			System.out.println("Current_List normal: " + current_team);
+		// 		}
+				
+				
+
+  //               swapholder = current_team.get(d);
+  //               current_team.set(d,current_team.get(0));
+  //               current_team.set(0,swapholder);
+					
+		// 		if(v_two){
+		// 			System.out.println("Swapholder works");
+		// 			System.out.println("d works");
+		// 			System.out.println("0 works");
+		// 		}
+				
+		// 		if(v_three){
+		// 			System.out.println("swapholder="+swapholder);
+		// 			System.out.println("Current_List swapped:" + current_team);
+		// 		}
+				
+				
+
+  //               //TO PRINT OUT current team
+		// 		if(v_two){
+		// 			for(int x = 0; x < current_team.size(); x++){
+		// 				System.out.println("current_team: "+current_team.get(x));
+		// 			}
+		// 			System.out.println("END OF ITERATION");
+				
+		// 			System.out.println("current_team(d): "+current_team.get(d));
+		// 		}
+				
+		// 		for(int e = 1; e < counter; e++){
+					
+		// 			int num = preferences.get(Integer.valueOf(current_team.get(0))-1).length; // ))-1
+					
+		// 			if(v_three){
+		// 				System.out.println("Length" +num);
+						
+		// 				System.out.println("current_team e:" +current_team.get(e));
+		// 			}
+					
+		// 			for(int f = 1; f < num; f++){
+						
+		// 				if(v_four){
+		// 					System.out.println("Members: "+preferences.get(Integer.valueOf(current_team.get(0))-1)[f]);
+		// 				}
+		// 				if(current_team.get(Integer.valueOf(e)).equals(preferences.get(Integer.valueOf(current_team.get(0))-1)[f])){
+		// 					happiness_team+= (groupsize - e); //d or e?
+		// 				}
+						
+		// 			}
+		// 		}
+
+  //               happiness_other += happiness_team;
+
+  //               if(happiness_team == 0){
+  //                   zero_count_team += 1;
+  //               }
+
+  //               swapholder = current_team.get(0);
+  //               current_team.set(0,current_team.get(d));
+  //               current_team.set(d,swapholder);
+				
+		// 		if(v_two){
+		// 			System.out.println("Current_List reverted: " + current_team);
+		// 		}
+  //           }
+
+  //           zero_count_other += zero_count_team;
+
+		// 	if(v_two){
+		// 		System.out.println("happiness_team: "+happiness_team);
+		// 		System.out.println("unhappiness_team: "+zero_count_team);
+		// 	}
+  //           happiness_team = 0;
+  //           zero_count_team = 0;
+			
+		// 	//TO RESET current_team so you can grab next team
+  //           current_team.clear();
+  //       }
+  //       if (v_two) {
+  //   		System.out.println("Main happiness: "+happiness_main);
+  //   		System.out.println("Main zeroes: "+zero_count_main);
+  //           System.out.println("Other happiness: "+happiness_other);
+  //           System.out.println("Other zeroes: "+zero_count_other);
+  //       }
+  //   }
+
+    public void swap() {
         ArrayList<String> group = new ArrayList<String>();
         ArrayList<String[]> test = new ArrayList<String[]>(); //test contains the names and numbers of the csv
-
-        //String individual_list[] = new String[11];
-        // String swapholder = "";
         ArrayList<String[]> csv_number_list = new ArrayList<String[]>();
-        int happiness = 0;
-        int zero_count = 0;
-
-        //place the below variables in another loop, final product will be in a nested
-        //for loop, outer compares one bucket list to another, inner counts happiness and
-        //unhappiness. 
-        // int zero_count_main = 0;
-        // int happiness_main = 0;
-
-        //unhappiness.
-        int happiness_team = 0;
-        int zero_count_team = 0;
-        int zero_count_other = 0;
-        int happiness_other = 0;
-
-        int a = 0;
-
         ArrayList<String> current_team = new ArrayList<String>();
 
-        int runtime = (int) Math.ceil((double) teams.size() / groupsize);
-        System.out.println(runtime);
+        int happiness_team = 0;
+        int zero_count_team = 0;
+        int counter = 0;
+        int a = 0;
+        int rand_1 = 0;
+        int rand_2 = 0;
+
+        Random rand = new Random();
+        rand_1 = rand.nextInt(bucket_list.size()-1);
+        rand_2 = rand.nextInt(bucket_list.size()-1);
+        if(v_three) {
+            System.out.println(bucket_list.size()-1);
+            System.out.println("Rand_1: "+rand_1);
+            System.out.println("Rand_2: "+rand_2);
+        }
+
+        String swapholder = "";
+        swapholder = teams_other.get(rand_1);
+        teams_other.set(rand_1,teams_other.get(rand_2));
+        teams_other.set(rand_2,swapholder);    
+        if(v_two){
+            System.out.println("Swapholder works");
+            System.out.println("rand_1 works");
+            System.out.println("rand_2 works");
+        }
+        if(v_three){
+                    System.out.println("swapholder="+swapholder);
+                    System.out.println("Current_List swapped:" + current_team);
+        }
+                
+
+        int runtime = (int) Math.ceil((double) teams_other.size() / groupsize);
+        
+        if(v_one){
+                System.out.println("runtime="+runtime);
+            }
 
         for(int outer = 0; outer < runtime; outer++){
+
             //GRAB TEAM WE WANT TO CHECK NEXT
-            for(int b = 0; b < groupsize && a < teams.size(); b++){
-                current_team.add(teams.get(a).toString());
+            
+            //Checks how long current_team is
+            counter = 0;
+            
+            for(int b = 0; b < groupsize && a < teams_other.size(); b++){
+                current_team.add(teams_other.get(a).toString());
                 a++;
+                counter++;
+            }
+            
+            if(v_one){
+                System.out.println("outer="+outer);
             }
 
             //TO PRINT OUT current team
-            for(int x = 0; x < current_team.size(); x++){
-                System.out.println("current_team: "+current_team.get(x));
-            }
-            System.out.println("END OF ITERATION");
-
-            for(int d = 0; d < groupsize; d++){
-                String swapholder = "";
-    
-                //To keep track in my head on what's what
-                //String current = current_team.get(d);
-                //String first = current_team.get(0);
-                //swapholder = current;
-                //current = first;
-                //first = swapholder;
-                    
-                swapholder = current_team.get(d);
-                current_team.set(d,current_team.get(0));
-                current_team.set(0,swapholder);
-
-                //TO PRINT OUT current team
+            if(v_two){
                 for(int x = 0; x < current_team.size(); x++){
                     System.out.println("current_team: "+current_team.get(x));
                 }
                 System.out.println("END OF ITERATION");
+            }
 
-                for (int e = 1; e < preferences.get(d).length; e++){
-                    for(int f = 1; f < current_team.size(); f++){
-
-                        //System.out.println("d: "+d+" e: "+e+" f: "+f);
-                        System.out.println("Person Checking: "+preferences.get(Integer.valueOf(current_team.get(d)))[e]);
-                        System.out.println("Teammates: "+current_team.get(f));
-                        if(preferences.get(Integer.valueOf(current_team.get(d))).length > 1 && preferences.get(Integer.valueOf(current_team.get(d)))[e] == current_team.get(f)){
-                            //happiness_team += ((preferences.get(d).length-1) - (e-1));
-                            happiness_team += 1;
-                        }
-                    }
-
+            // Loops through current_teams
+            for(int d = 0; d < counter; d++){
+                
+                if(v_one){
+                    System.out.println("d="+d);
                 }
-                happiness_main += happiness_team;
+                
+
+                //TO PRINT OUT current team
+                if(v_two){
+                
+                    System.out.println("current_team(d): "+current_team.get(d));
+                }
+                
+                int num = preferences.get(Integer.valueOf(current_team.get(d))-1).length; // ))-1
+                
+                if(v_three){
+                    System.out.println("Length" +num);
+                    
+                    System.out.println("current_team d:" +current_team.get(d));
+                }
+                
+                // Take member of current_teams and look at their preferences to see how happy they are
+                for(int f = 1; f < num; f++){
+                    
+                    if(v_four){
+                        System.out.println("Members: "+preferences.get(Integer.valueOf(current_team.get(d))-1)[f]);
+                    }
+                    if(current_team.get(Integer.valueOf(d)).equals(preferences.get(Integer.valueOf(current_team.get(d))-1)[f])){
+                        happiness_team += (num - (f+1));
+                    }
+                }
+
+                happiness_other += happiness_team;
 
                 if(happiness_team == 0){
                     zero_count_team += 1;
                 }
-
-                swapholder = current_team.get(0);
-                current_team.set(0,current_team.get(d));
-                current_team.set(d,swapholder);
-
+                
             }
 
-            zero_count_main += zero_count_team;
+            zero_count_other += zero_count_team;
 
-            System.out.println("happiness: "+happiness_team);
-            System.out.println("unhappiness: "+zero_count_team);
+            if(v_two){
+                System.out.println("happiness_team: "+happiness_team);
+                System.out.println("unhappiness_team: "+zero_count_team);
+            }
             happiness_team = 0;
             zero_count_team = 0;
-        }
-
-
+            
             //TO RESET current_team so you can grab next team
             current_team.clear();
+        }
+        //System.out.println("Here");
+        if(happiness_main < happiness_other && zero_count_main >= zero_count_other) {
+            swapholder = teams_other.get(rand_1);
+            teams_other.set(rand_1,teams_other.get(rand_2));
+            teams_other.set(rand_2,swapholder); 
+            if(v_two){
+                System.out.println("Swapholder works");
+                System.out.println("rand_1 works");
+                System.out.println("rand_2 works");
+            }
+            if(v_two){
+                    System.out.println("Current_List reverted: " + current_team);
+            }
+        }
+        if (v_two) {
+            System.out.println("Main happiness: "+happiness_main);
+            System.out.println("Main zeroes: "+zero_count_main);
+            System.out.println("Other happiness: "+happiness_other);
+            System.out.println("Other zeroes: "+zero_count_other);
+        }
     }
 
+	public void happy_Checker() {
+        for (int i = 0; i < n; i++) {
+            swap();
+        }
+        if((happiness_main < happiness_other && zero_count_main >= zero_count_other) || happiness_main == 0) {
+            teams_main = teams_other;
+            happiness_main = happiness_other;
+            zero_count_main = zero_count_other;
+        }
+        System.out.println("Teams"+teams_main);
+        System.out.println("Happiness: "+happiness_main);
+        System.out.println("Unhappiness: "+zero_count_main);
+        happiness_other = 0;
+        zero_count_other = 0;
+    }
+
+    public int getL() {
+        return l;
+    }
+	
     public List getList() {
         return bucket_list;
     }
 
     public boolean randomizer(List<Integer> bucket_list) {
-        if (bucket_list == null) {
+        if (teams_other == null) {
             return false;
         }
-        Collections.shuffle(bucket_list);
-        System.out.println("Bucket List "+bucket_list);
+        Collections.shuffle(teams_other);
+        //System.out.println("Teams "+teams_other);
         return true;
     }
 
