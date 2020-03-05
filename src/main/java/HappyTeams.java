@@ -22,7 +22,7 @@ public class HappyTeams {
     private int happiness_other = 0;
     private int zero_count_other = 0;
 
-    //Variables that will get the values from the command line args
+    // Variables that will get the values from the command line args
     private static int groupsize = 4;
     private static int n = 1000;
     private static int l = 5;
@@ -46,6 +46,7 @@ public class HappyTeams {
             for (int val = 0; val < args.length; val+=2) {
 
                 if(args[val].equals("-v")){
+                    // The higher the number the more debugging code the user can see
                     if(Integer.valueOf(args[val + 1]) > 0){
                         v_one = true;
                     }
@@ -116,6 +117,7 @@ public class HappyTeams {
 		// v_three = true;
 		// v_four = true;
 
+        // numPerson help with tracking the people in the csv and makes printing more sense
         int numPerson = 1;
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
 
@@ -130,6 +132,7 @@ public class HappyTeams {
                 preferences.add(member);
 
                 if(v_one){
+                    // Print out what's in the csv
                     System.out.print("Member "+numPerson+": "+member[0]+" [");
                     if (member.length > 1){
                         System.out.print(member[1]);
@@ -169,6 +172,7 @@ public class HappyTeams {
         int rand_1 = 0;
         int rand_2 = 0;
 
+        // Pick two random people to swap
         Random rand = new Random();
         rand_1 = rand.nextInt(bucket_list.size()-1);
         rand_2 = rand.nextInt(bucket_list.size()-1);
@@ -200,12 +204,11 @@ public class HappyTeams {
             }
 
         for(int outer = 0; outer < runtime; outer++){
-
-            //GRAB TEAM WE WANT TO CHECK NEXT
             
             //Checks how long current_team is
             counter = 0;
             
+            // GRAB TEAM WE WANT TO CHECK NEXT
             for(int b = 0; b < groupsize && a < teams_other.size(); b++){
                 current_team.add(teams_other.get(a).toString());
                 a++;
@@ -216,7 +219,7 @@ public class HappyTeams {
                 System.out.println("outer="+outer);
             }
 
-            //TO PRINT OUT current team
+            // TO PRINT OUT current team
             if(v_two){
                 for(int x = 0; x < current_team.size(); x++){
                     System.out.println("current_team: "+current_team.get(x));
@@ -261,8 +264,7 @@ public class HappyTeams {
 
                 if(happiness_team == 0){
                     zero_count_team += 1;
-                }
-                
+                } 
             }
 
             zero_count_other += zero_count_team;
@@ -271,6 +273,7 @@ public class HappyTeams {
                 System.out.println("happiness_team: "+happiness_team);
                 System.out.println("unhappiness_team: "+zero_count_team);
             }
+            
             happiness_team = 0;
             zero_count_team = 0;
             
