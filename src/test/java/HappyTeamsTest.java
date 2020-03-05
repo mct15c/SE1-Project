@@ -1,5 +1,3 @@
-package com.ams;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -12,9 +10,9 @@ import org.junit.runners.MethodSorters;
 import org.junit.*;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class teamMakerTest
+public class HappyTeamsTest
 {
-    teamMaker teams;
+    HappyTeams teams;
 
     @Rule
     public TestRule watcher =
@@ -26,13 +24,13 @@ public class teamMakerTest
     
     @Before
     public void initialize() {
-		teams = new teamMaker();
+		teams = new HappyTeams();
     }
 
     @Test
     public void test1ReadFile() 
     {
-    	boolean worked = teams.readFile();
+    	boolean worked = teams.readFile("Test.csv");
        	assertEquals(true,worked);
     }
 
@@ -40,21 +38,21 @@ public class teamMakerTest
     public void test2TotalNumPerson(){
     	// have to read the file again because it goes out of scope 
     	// or something in the previous test for total number of people
-    	boolean worked = teams.readFile();
+    	boolean worked = teams.readFile("Test.csv");
     	int numPerson = teams.getTotalNumPerson();
         System.out.println("Total Number of People: "+numPerson);
     	assertEquals(true, worked);
-    	assertEquals(7,numPerson);
+    	assertEquals(11,numPerson);
     }
 
     @Test
     public void test3ClearTotalNumPerson(){
         // have to read the file again because it goes out of scope 
         // or something in the previous test for total number of people
-        boolean worked = teams.readFile();
+        boolean worked = teams.readFile("Test.csv");
         int numPerson = teams.getTotalNumPerson();
         assertEquals(true, worked);
-        assertEquals(7,numPerson);
+        assertEquals(11,numPerson);
         System.out.println("Total Number of People: "+numPerson);
         teams.clearTotalNumPerson();
         numPerson = teams.getTotalNumPerson();
@@ -64,17 +62,42 @@ public class teamMakerTest
 
     @Test
     public void test4BeforeRandomizer(){
-        boolean worked = teams.readFile();
+        boolean worked = teams.readFile("Test.csv");
         System.out.println("Bucket List "+teams.getList());
         assertEquals(true,worked);
     }
 
     @Test
     public void test5Randomizer(){
-        boolean worked = teams.readFile();
+        boolean worked = teams.readFile("Test.csv");
         assertEquals(true,worked);
         worked = teams.randomizer(teams.getList());
         assertEquals(true,worked);
+        System.out.println("\n");
+    }
+
+    @Test
+    public void testHappiness(){
+        boolean worked = teams.readFile("Test.csv");
+        assertEquals(true,worked);
+        worked = teams.randomizer(teams.getList());
+        assertEquals(true,worked);
+        teams.happy_Checker();
+        worked = teams.randomizer(teams.getList());
+        assertEquals(true,worked);
+        teams.happy_Checker();
+    }
+
+    @Test
+    public void testHappinessWithUsingL(){
+        boolean worked = teams.readFile("Test.csv");
+        assertEquals(true,worked);
+        int l = teams.getL();
+        for (int i = 0; i < l; i++) {
+            worked = teams.randomizer(teams.getList());
+            assertEquals(true,worked);
+            teams.happy_Checker();
+        }
     }
 
 }
